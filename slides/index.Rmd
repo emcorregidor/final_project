@@ -1,16 +1,202 @@
 ---
-title: "Presentation Ninja"
-subtitle: "⚔<br/>with xaringan"
-author: "Yihui Xie"
-institute: "RStudio, PBC"
-date: "2016/12/12 (updated: `r Sys.Date()`)"
+title: "*Emotionality in a second language: It's a matter of time* (Opitz & Degner, 2012): an adaptation"
+subtitle: "Data Science for Linguists: Final Project"
+author: "Eva María Corregidor Luna"
+institute: "Department of Spanish and Portuguese, Rutgers University"
+date: "2025/05/05 (updated: `r Sys.Date()`)"
 output:
   xaringan::moon_reader:
+    css: ["hygge", "rutgers", "rutgers-fonts"]
     lib_dir: libs
     nature:
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
 ---
+```{r include=FALSE}
+library(tidyverse)
+library(ggplot2)
+library(knitr)
+library(here)
+library(ggthemes)
+```
 
-slides template
+```{r include=FALSE}
+data_raw <- read.csv(here("data", "raw", "response_latency_data.csv"))
+```
+
+```{r include=FALSE}
+data_tidy <- data_raw |>
+  separate(
+    col = id,
+    into = c("id", "language"),
+    sep = "_") |>
+  separate (
+    col = item,
+    into = c("word_type", "number"),
+    sep = "_") |>
+  rename(accuracy = response) |>
+  select(id, language, word_type, accuracy, latency)
+```
+
+#*Emotionality in a second language: It's a matter of time* (Opitz & Degner, 2012)
+
+- Different sense of emotionality in a person’s first (L1) and second language (L2).
+- **Participants**: 33 bilinguals (FR-GE).
+- **Task**: Lexical Monitoring Task (Yes/No Decision).
+- **EEG Recording**: Data recorded while processing pleasant, unpleasant and neutral words in L1 and L2. Differences in processing recorded through the early posterior negativity (EPN).
+- **Results**: the affective valence of L2 words is processed in a less immediate way due to delayed lexical access; interference in a highly integrated L1/ L2 mental lexicon."
+---
+#An adaptation for ds4ling
+##Research Questions & Hypothesis
+
+**RQ1**: Are emotion concepts in the L2 processed later and less accurately than in the L1?
+
+**H1**: Accuracy in L1 will be greater than accuracy in L2; latency will be greater when performing the task in the L2 than in the L1.
+---
+#An adaptation for ds4ling
+##Participants
+- 150 Spanish-English bilinguals (75 women).
+
+- Aged 25–35 years.
+
+- Recruited among the administrative personnel from Rutgers University.
+
+- Right-handed, normal or corrected-to-normal vision, reported no history of neurological or language disorders.
+
+- **Late L2 learners (AoA = 12)**.
+
+- By the time of testing...
+    - **Highly proficient in Spanish.**
+    - Mean of self-rated frequency of **weekly L2 use of 65%**.
+    - At least one long stay (>6 months) in a L2 country.
+---
+#An adaptation for ds4ling
+##Tasks & Stimuli
+**1. Language History Questionnaire**
+
+Used to obtain information about the bilingual profile, L2 acquisition, L2 use and L2 frequency. It contained 7 multiple-choice questions, 8 questions with numerical scales and 5 open questions (total of 20 questions).
+---
+#An adaptation for ds4ling
+##Tasks & Stimuli
+**2. Lexical Monitoring Task**
+
+For the ENGLISH version of the task...
+- Stimuli were obtained from an English words database (Imbault et al., 2020) were words were rated by participants based on valence and arousal. 
+- From the database, the **50 words** with the highest valence level were chosen to be the **emotional words**. Similarly, the **50 words** with the lowest valance level were chosen to be the **non-emotional words**. 
+- All words were nouns and were matched in word length, frequency of use. For the **pseudo-words**, **50 words** were created using Artificial Intelligence (AI).
+---
+#An adaptation for ds4ling
+##Tasks & Stimuli
+**2. Lexical Monitoring Task**
+For the SPANISH version of the task...
+- Words were translated by 5 native speakers and those translations that matched were used.
+
+The task was divided in five rounds, each with 30 trials (10 emotion words, 10 non-emotion words, 10 pseudo-words).
+---
+#An adaptation for ds4ling
+##EEG Recording
+
+Early emotion processing is captured at the word level by the Early Posterior Negativity (EPN)...
+- Elicited around 200-300 ms post-stimulus.
+- Mapped in the occipital cortex.
+- An index of rapid emotional attention (Luck, 2014).
+- Here, use to capture response-accuracy and latency (and amplitude?).
+---
+#An adaptation for ds4ling
+##Statistical Analysis
+
+**Dependent Variables**
+- *Accuracy* in L1 AND L2 (right/wrong)
+- *Latency* (ms, 280-430)
+
+**Predictors**
+- *Language* (l1, l2)
+- *Word type* (emotion, non-emotion, and pseudo-words [only in the task, not for analysis])
+
+**To keep in mind...**
+- Accuracy is a binary outcome, a Yes/No decision AND a count vector.
+- Latency does not range from -∞ to ∞.
+- Predictors (language, word-type) are both categorical variables.
+---
+#An adaptation for ds4ling
+##Statistical Analysis: Accuracy Model
+A generalized linear model + binary regression
+
+*Accuracy* ~ *Task Language* + *Word Type*
+```{r echo=TRUE}
+mod_accuracy <- glm(
+  accuracy ~ language + word_type, 
+  data = data_tidy, 
+  family = "binomial"
+)
+```
+---
+#An adaptation for ds4ling
+##Statistical Analysis: Accuracy Model
+```{r echo=FALSE}
+summary(mod_accuracy)
+```
+---
+```{r echo=FALSE, warning=FALSE}
+#| dpi: 400
+#| fig-align: center
+#| max-width: "75%"
+#| out-width: "75%"
+data_tidy |>
+  ggplot() +
+  aes(x = accuracy, y = language, color = word_type) +
+  geom_point(alpha = 0.2) +
+  geom_smooth(method = "glm", method.args = list(family = "binary")) +
+  scale_fill_viridis_d(begin = 0.3, end = 0.8) +
+  scale_color_viridis_d(begin = 0.3, end = 0.8) +
+  ds4ling::ds4ling_bw_theme()
+```
+---
+#An adaptation for ds4ling
+##Statistical Analysis: Latency Model
+A general linear model (spoiler: plots are more fun)
+
+*Latency* ~ *Task Language* + *Word Type*
+```{r echo=TRUE}
+mod_latency <- lm(
+  accuracy ~ language + word_type, 
+  data = data_tidy)
+```
+---
+#An adaptation for ds4ling
+##Statistical Analysis: Latency Model
+```{r echo=FALSE}
+summary(mod_latency)
+```
+---
+```{r echo=FALSE}
+#| out-width: "85%"
+#| max-width: "85%"
+#| dpi: 400
+#| fig.align: "center"
+data_tidy |>
+  ggplot(aes(x = language, y = latency, color = word_type)) +
+  geom_jitter(height = 0, width = 0.2, alpha = 0.4) +
+    stat_summary(
+  fun.data = mean_sdl,
+  geom = 'pointrange'
+) +
+  facet_grid(. ~ word_type) +
+  scale_fill_viridis_d(begin = 0.3, end = 0.8) +
+  scale_color_viridis_d(begin = 0.3, end = 0.8) +
+  ds4ling::ds4ling_bw_theme()
+```
+---
+#An adaptation for ds4ling
+##Considerations & Current Challenges
+- Complexity of the model: **need** to understand it.
+- Filter for pseudowords.
+- Plots.
+- Adding an slope?
+  - For **accuracy**: *Accuracy* ~ *Task Language* x *Word Type* (+ 1 | item)
+  - For **latency**: *Latency* ~ *Task Language* x *Word Type* (+ 1 | item)
+- **Extra layers**: proficiency, amplitude.
+---
+#An adaptation for ds4ling
+Thank you for listening! Please use this time to provie any **suggestion** to improve the project and to ask any **questions** you might still have. 🙂

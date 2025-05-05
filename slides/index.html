@@ -1,44 +1,229 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Presentation Ninja</title>
+    <title>Emotionality in a second language: It’s a matter of time (Opitz &amp; Degner, 2012): an adaptation</title>
     <meta charset="utf-8" />
-    <meta name="author" content="Yihui Xie" />
+    <meta name="author" content="Eva María Corregidor Luna" />
     <script src="libs/header-attrs-2.29/header-attrs.js"></script>
-    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
-    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/hygge.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/rutgers.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/rutgers-fonts.css" rel="stylesheet" />
   </head>
   <body>
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
 .title[
-# Presentation Ninja
+# <em>Emotionality in a second language: It’s a matter of time</em> (Opitz &amp; Degner, 2012): an adaptation
 ]
 .subtitle[
-## ⚔<br/>with xaringan
+## Data Science for Linguists: Final Project
 ]
 .author[
-### Yihui Xie
+### Eva María Corregidor Luna
 ]
 .institute[
-### RStudio, PBC
+### Department of Spanish and Portuguese, Rutgers University
 ]
 .date[
-### 2016/12/12 (updated: 2025-04-29)
+### 2025/05/05 (updated: 2025-05-05)
 ]
 
 ---
 
 
-slides template
+
+
+
+
+
+#*Emotionality in a second language: It's a matter of time* (Opitz &amp; Degner, 2012)
+
+- Different sense of emotionality in a person’s first (L1) and second language (L2).
+- **Participants**: 33 bilinguals (FR-GE).
+- **Task**: Lexical Monitoring Task (Yes/No Decision).
+- **EEG Recording**: Data recorded while processing pleasant, unpleasant and neutral words in L1 and L2. Differences in processing recorded through the early posterior negativity (EPN).
+- **Results**: the affective valence of L2 words is processed in a less immediate way due to delayed lexical access; interference in a highly integrated L1/ L2 mental lexicon."
+---
+#An adaptation for ds4ling
+##Research Questions &amp; Hypothesis
+
+**RQ1**: Are emotion concepts in the L2 processed later and less accurately than in the L1?
+
+**H1**: Accuracy in L1 will be greater than accuracy in L2; latency will be greater when performing the task in the L2 than in the L1.
+---
+#An adaptation for ds4ling
+##Participants
+- 150 Spanish-English bilinguals (75 women).
+
+- Aged 25–35 years.
+
+- Recruited among the administrative personnel from Rutgers University.
+
+- Right-handed, normal or corrected-to-normal vision, reported no history of neurological or language disorders.
+
+- **Late L2 learners (AoA = 12)**.
+
+- By the time of testing...
+    - **Highly proficient in Spanish.**
+    - Mean of self-rated frequency of **weekly L2 use of 65%**.
+    - At least one long stay (&gt;6 months) in a L2 country.
+---
+#An adaptation for ds4ling
+##Tasks &amp; Stimuli
+**1. Language History Questionnaire**
+
+Used to obtain information about the bilingual profile, L2 acquisition, L2 use and L2 frequency. It contained 7 multiple-choice questions, 8 questions with numerical scales and 5 open questions (total of 20 questions).
+---
+#An adaptation for ds4ling
+##Tasks &amp; Stimuli
+**2. Lexical Monitoring Task**
+
+For the ENGLISH version of the task...
+- Stimuli were obtained from an English words database (Imbault et al., 2020) were words were rated by participants based on valence and arousal. 
+- From the database, the **50 words** with the highest valence level were chosen to be the **emotional words**. Similarly, the **50 words** with the lowest valance level were chosen to be the **non-emotional words**. 
+- All words were nouns and were matched in word length, frequency of use. For the **pseudo-words**, **50 words** were created using Artificial Intelligence (AI).
+---
+#An adaptation for ds4ling
+##Tasks &amp; Stimuli
+**2. Lexical Monitoring Task**
+For the SPANISH version of the task...
+- Words were translated by 5 native speakers and those translations that matched were used.
+
+The task was divided in five rounds, each with 30 trials (10 emotion words, 10 non-emotion words, 10 pseudo-words).
+---
+#An adaptation for ds4ling
+##EEG Recording
+
+Early emotion processing is captured at the word level by the Early Posterior Negativity (EPN)...
+- Elicited around 200-300 ms post-stimulus.
+- Mapped in the occipital cortex.
+- An index of rapid emotional attention (Luck, 2014).
+- Here, use to capture response-accuracy and latency (and amplitude?).
+---
+#An adaptation for ds4ling
+##Statistical Analysis
+
+**Dependent Variables**
+- *Accuracy* in L1 AND L2 (right/wrong)
+- *Latency* (ms, 280-430)
+
+**Predictors**
+- *Language* (l1, l2)
+- *Word type* (emotion, non-emotion, and pseudo-words [only in the task, not for analysis])
+
+**To keep in mind...**
+- Accuracy is a binary outcome, a Yes/No decision AND a count vector.
+- Latency does not range from -∞ to ∞.
+- Predictors (language, word-type) are both categorical variables.
+---
+#An adaptation for ds4ling
+##Statistical Analysis: Accuracy Model
+A generalized linear model + binary regression
+
+*Accuracy* ~ *Task Language* + *Word Type*
+
+``` r
+mod_accuracy &lt;- glm(
+  accuracy ~ language + word_type, 
+  data = data_tidy, 
+  family = "binomial"
+)
+```
+---
+#An adaptation for ds4ling
+##Statistical Analysis: Accuracy Model
+
+```
+## 
+## Call:
+## glm(formula = accuracy ~ language + word_type, family = "binomial", 
+##     data = data_tidy)
+## 
+## Coefficients:
+##                       Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)            2.04898    0.02705  75.739  &lt; 2e-16 ***
+## languageL2            -1.60830    0.02623 -61.319  &lt; 2e-16 ***
+## word_typenonemotional  0.22489    0.02872   7.830 4.89e-15 ***
+## word_typepseudoword    0.22618    0.02873   7.874 3.45e-15 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 48370  on 44999  degrees of freedom
+## Residual deviance: 43887  on 44996  degrees of freedom
+## AIC: 43895
+## 
+## Number of Fisher Scoring iterations: 4
+```
+---
+
+```
+## `geom_smooth()` using formula = 'y ~ x'
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-6-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+---
+#An adaptation for ds4ling
+##Statistical Analysis: Latency Model
+A general linear model (spoiler: plots are more fun)
+
+*Latency* ~ *Task Language* + *Word Type*
+
+``` r
+mod_latency &lt;- lm(
+  accuracy ~ language + word_type, 
+  data = data_tidy)
+```
+---
+#An adaptation for ds4ling
+##Statistical Analysis: Latency Model
+
+```
+## 
+## Call:
+## lm(formula = accuracy ~ language + word_type, data = data_tidy)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.91207  0.08793  0.08813  0.34447  0.38113 
+## 
+## Coefficients:
+##                        Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)            0.875400   0.003766 232.455  &lt; 2e-16 ***
+## languageL2            -0.256533   0.003766 -68.120  &lt; 2e-16 ***
+## word_typenonemotional  0.036467   0.004612   7.906 2.71e-15 ***
+## word_typepseudoword    0.036667   0.004612   7.950 1.91e-15 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.3994 on 44996 degrees of freedom
+## Multiple R-squared:  0.09502,	Adjusted R-squared:  0.09496 
+## F-statistic:  1575 on 3 and 44996 DF,  p-value: &lt; 2.2e-16
+```
+---
+&lt;img src="index_files/figure-html/unnamed-chunk-9-1.png" width="85%" style="display: block; margin: auto;" /&gt;
+---
+#An adaptation for ds4ling
+##Considerations &amp; Current Challenges
+- Complexity of the model: **need** to understand it.
+- Filter for pseudowords.
+- Plots.
+- Adding an slope?
+  - For **accuracy**: *Accuracy* ~ *Task Language* x *Word Type* (+ 1 | item)
+  - For **latency**: *Latency* ~ *Task Language* x *Word Type* (+ 1 | item)
+- **Extra layers**: proficiency, amplitude.
+---
+#An adaptation for ds4ling
+Thank you for listening! Please use this time to provie any **suggestion** to improve the project and to ask any **questions** you might still have. 🙂
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
-  "highlightStyle": "github",
-  "highlightLines": true,
-  "countIncrementalSlides": false
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));

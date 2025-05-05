@@ -1,33 +1,17 @@
 ---
-title             : "The title"
-shorttitle        : "Title"
+title             : "*Emotionality in a second language: It's a matter of time* (Opitz & Degner, 2012): an adaptation"
+shorttitle        : "Data Science for Linguists: Final Project"
 
 author: 
-  - name          : "First Author"
+  - name          : "Eva María Corregidor Luna"
     affiliation   : "1"
     corresponding : yes    # Define only one corresponding author
-    address       : "Postal address"
-    email         : "my@email.com"
-    role: # Contributorship roles (e.g., CRediT, https://credit.niso.org/)
-      - "Conceptualization"
-      - "Writing - Original Draft Preparation"
-      - "Writing - Review & Editing"
-  - name          : "Ernst-August Doelle"
-    affiliation   : "1,2"
-    role:
-      - "Writing - Review & Editing"
-      - "Supervision"
+    address       : "15 Seminary Place, 5th Flr, Office 5187"
+    email         : "eva.corregidor@rutgers.edu"
 
 affiliation:
   - id            : "1"
-    institution   : "Wilhelm-Wundt-University"
-  - id            : "2"
-    institution   : "Konstanz Business School"
-
-authornote: |
-  Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
-
-  Enter author note here.
+    institution   : "Department of Spanish and Portuguese. Rutgers University"
 
 abstract: |
   One or two sentences providing a **basic introduction** to the field,  comprehensible to a scientist in any discipline.
@@ -40,7 +24,7 @@ abstract: |
   
   <!-- https://tinyurl.com/ybremelq -->
   
-keywords          : "keywords"
+keywords          : "emotion words, second language, accuracy, latency"
 wordcount         : "X"
 
 bibliography      : "r-references.bib"
@@ -69,20 +53,52 @@ set.seed(42)
 knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
 ```
 
-
-
 # Methods
 We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study. <!-- 21-word solution (Simmons, Nelson & Simonsohn, 2012; retrieved from http://ssrn.com/abstract=2160588) -->
 
 ## Participants
+150 English–Spanish bilinguals (75 women), aged 25–35 years (M = XX, SD = XX), were recruited among the administrative personnel from Rutgers University to participate in the study. Two participants were excluded from the analysis because of excessive artifacts. All were right-handed, had normal or corrected-to-normal vision, and reported no history of neurological or language disorders.
 
-## Material
+Participants were late L2 learners and started to learn Spanish at age 12 as part of their education. By the time of the study, they were highly proficient in Spanish (add proficiency test), and reported a mean of self-rated frequency of weekly L2 use of 65%, mostly in work-related settings. All participants had spent at least one long stay (>6 months) in a L2 country.
+
+## Materials
+
+## Language History Questionnaire
+The Language History questionnaire (LHQ) was used to obtain information about the bilingual profile, L2 acquisition, L2 use and L2 frequency. It contained 7 multiple-choice questions, 8 questions with numerical scales and 5 open questions (total of 20 questions).
+
+## Lexical Monitoring Task
+Stimuli were obtained from an English words database (Imbault et al., 2020) were words were rated by participants based on valence and arousal. From the database, the 50 words with the highest valence level were chosen to be the emotional words. Similarly, the 50 words with the lowest valance level were chosen to be the non-emotional words. All words were nouns and were matched in word length, frequency of use. For the pseudo-words, 50 words were created using Artificial Intelligence (AI).
+
+The LMT is an adaptation of lexical decision task (Opitz & Degner, 2012). In the LMT, participants look at a monitor screen, see a word and decide whether it is a real word or not (Yes/No decision). The task was divided in five rounds, each with 30 trials (10 emotion words, 10 non-emotion words, 10 pseudo-words).
 
 ## Procedure
+Participants were recruited among the administrative personnel from Rutgers University. Each participant signed the consent form and completed the Language History Questionnaire online and independently 7-10 days before coming to the lab facilities to complete the LDT.
 
-## Data analysis
-We used `r cite_r("r-references.bib")` for all our analyses.
+The experiment was conducted in the BLiNK lab at Rutgers University. The lab and equipment setup were started thirty minutes before the participant arrives. Temperature and humidity were recorded. To confirm that all the systems were working correctly, computers were turned on, and some tests were performed (timing tests, gains, and zero measurements).
 
+Once the participant was greeted in the lab, there was a tour of the facilities and they were taken to the recording room. The recording room had a chair where the participant could be seated comfortably and had been electrically shielded and sound-attenuated. There, the circumference of the participant’s head was measured, and their vertex placement was marked. After this, the correct net size was chosen and placed into the participants' head. Before starting the EEG recording, impedances were be measured, repositioning those electrodes exceeding 40kΩ. When it was not possible to detect the signal from problematic electrodes, they were noted in the lab notebook. Response collection was completed with a stimulus box with three colors, match with the three word types.
+
+Before recording the data, the participant was shown their brain data waves and received instructions to demonstrate the most common artifacts on EEG recording (eye blinks, teeth clenching, jaw movements, etc.) that needed to be avoided while the completion of the tasks. After that, there was verbal instructions for the LDT. The participant completed two practice trials with verbal feedback and then be left alone in the EEG recording room to start the data collection.
+
+Stimuli were presented in black (16 Arial) font and centered in a white background in a 17in PC monitor. A fixation cross appeared for 1000ms at the beginning of the task and in between rounds. After that, each word was presented in the screen and disappeared after the participant made the decision. Once the participant pressed the decision button, the next word appeared. If no decision was made, the word was presented for a maximum duration of 1000ms. Once the participant completed the task, there was a debrief explanation of the experiment.
+
+## Statistical analysis
+We used `r cite_r("r-references.bib")` for all our analyses. Data from the LMT and the LHQ were analyzed
+
+Analyses (what I would do)
+a) Accuracy ~ Task Language x Word Type (+ 1 | item)
+b) Latency ~ Task Language x Word Type (+ 1 | item)
+
+DVs (measurement, options)
+
+Accuracy in L1 AND L2 (right/wrong)
+Latency (ms, 280-430)
+Predictors
+
+Language (l1, l2)
+Condition-Word type (emotion, non-emotion, and pseudo-words [this ones will not be considered for the analysis])
+
+Data from the categorization task were analyzed using a generalized linear mixed-effects model with a binomial linking function (as implemented in the Ime package 1.1-10 in R 3.2.2). The model included response (body/potty) as the dependent variable, and adaptor condition (prevoiced, ambiguous, aspirated), lexical set (/b/-adaptors, /p-adaptors/), and continuum step (ranging from -40 to +60 VOT in 10 ms increments) as fixed factors. A "body" response was coded as "" and a "potty" response was coded as "1." Causal priority was given to lexical set and the model included random intercepts for each subject. Significance of main effects and all possible interactions were assessed using hierarchical partitioning of the variance via nested model compari-sons. Orthogonal contrast coding directly compared the participants' responses in each adaptor condition as a function of lexical set. We report p-values with alpha set at 0.05 and include confidence intervals of parameter estimates in order to provide an assessment of effect
 
 # Results
 
