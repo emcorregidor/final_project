@@ -13,24 +13,10 @@ affiliation:
   - id            : "1"
     institution   : "Department of Spanish and Portuguese. Rutgers University"
 
-abstract: |
-  One or two sentences providing a **basic introduction** to the field,  comprehensible to a scientist in any discipline.
-  Two to three sentences of **more detailed background**, comprehensible  to scientists in related disciplines.
-  One sentence clearly stating the **general problem** being addressed by  this particular study.
-  One sentence summarizing the main result (with the words "**here we show**" or their equivalent).
-  Two or three sentences explaining what the **main result** reveals in direct comparison to what was thought to be the case previously, or how the  main result adds to previous knowledge.
-  One or two sentences to put the results into a more **general context**.
-  Two or three sentences to provide a **broader perspective**, readily comprehensible to a scientist in any discipline.
-  
-  <!-- https://tinyurl.com/ybremelq -->
-  
-keywords          : "emotion words, second language, accuracy, latency"
-wordcount         : "X"
-
 bibliography      : "r-references.bib"
 
 floatsintext      : no
-linenumbers       : yes
+linenumbers       : no
 draft             : no
 mask              : no
 
@@ -45,6 +31,7 @@ output            : papaja::apa6_word
 ```{r setup, include = FALSE}
 library("papaja")
 r_refs("r-references.bib")
+source("../scripts/libs.R")
 ```
 
 ```{r analysis-preferences}
@@ -54,60 +41,67 @@ knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
 ```
 
 # Methods
-We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study. <!-- 21-word solution (Simmons, Nelson & Simonsohn, 2012; retrieved from http://ssrn.com/abstract=2160588) -->
-
 ## Participants
-150 English–Spanish bilinguals (75 women), aged 25–35 years (M = XX, SD = XX), were recruited among the administrative personnel from Rutgers University to participate in the study. Two participants were excluded from the analysis because of excessive artifacts. All were right-handed, had normal or corrected-to-normal vision, and reported no history of neurological or language disorders.
+150 English–Spanish bilinguals (75 women), aged 25–35 years, were recruited among the administrative personnel from Rutgers University to participate in the study. Two participants were excluded from the analysis because of excessive artifacts. All were right-handed, had normal or corrected-to-normal vision, and reported no history of neurological or language disorders.
 
 Participants were late L2 learners and started to learn Spanish at age 12 as part of their education. By the time of the study, they were highly proficient in Spanish (add proficiency test), and reported a mean of self-rated frequency of weekly L2 use of 65%, mostly in work-related settings. All participants had spent at least one long stay (>6 months) in a L2 country.
 
 ## Materials
 
 ## Language History Questionnaire
-The Language History questionnaire (LHQ) was used to obtain information about the bilingual profile, L2 acquisition, L2 use and L2 frequency. It contained 7 multiple-choice questions, 8 questions with numerical scales and 5 open questions (total of 20 questions).
+The Language History questionnaire was used to obtain information about the bilingual profile, L2 acquisition, L2 use, and L2 frequency. It contained 7 multiple-choice questions, 8 questions with numerical scales, and 5 open questions (total of 20 questions).
 
 ## Lexical Monitoring Task
-Stimuli were obtained from an English words database (Imbault et al., 2020) were words were rated by participants based on valence and arousal. From the database, the 50 words with the highest valence level were chosen to be the emotional words. Similarly, the 50 words with the lowest valance level were chosen to be the non-emotional words. All words were nouns and were matched in word length, frequency of use. For the pseudo-words, 50 words were created using Artificial Intelligence (AI).
+Stimuli were obtained from an English words database (Kuperman & Imbault, 2020) where words were rated by participants based on valence and arousal. From the database, the 50 words with the highest valence level were chosen to be the emotional words. Similarly, the 50 words with the lowest valance level were chosen to be the non-emotional words. All words were nouns and were matched in word length, frequency of use. For the pseudo-words, 50 words were created using Artificial Intelligence (AI).
 
-The LMT is an adaptation of lexical decision task (Opitz & Degner, 2012). In the LMT, participants look at a monitor screen, see a word and decide whether it is a real word or not (Yes/No decision). The task was divided in five rounds, each with 30 trials (10 emotion words, 10 non-emotion words, 10 pseudo-words).
-
-## Procedure
-Participants were recruited among the administrative personnel from Rutgers University. Each participant signed the consent form and completed the Language History Questionnaire online and independently 7-10 days before coming to the lab facilities to complete the LDT.
-
-The experiment was conducted in the BLiNK lab at Rutgers University. The lab and equipment setup were started thirty minutes before the participant arrives. Temperature and humidity were recorded. To confirm that all the systems were working correctly, computers were turned on, and some tests were performed (timing tests, gains, and zero measurements).
-
-Once the participant was greeted in the lab, there was a tour of the facilities and they were taken to the recording room. The recording room had a chair where the participant could be seated comfortably and had been electrically shielded and sound-attenuated. There, the circumference of the participant’s head was measured, and their vertex placement was marked. After this, the correct net size was chosen and placed into the participants' head. Before starting the EEG recording, impedances were be measured, repositioning those electrodes exceeding 40kΩ. When it was not possible to detect the signal from problematic electrodes, they were noted in the lab notebook. Response collection was completed with a stimulus box with three colors, match with the three word types.
-
-Before recording the data, the participant was shown their brain data waves and received instructions to demonstrate the most common artifacts on EEG recording (eye blinks, teeth clenching, jaw movements, etc.) that needed to be avoided while the completion of the tasks. After that, there was verbal instructions for the LDT. The participant completed two practice trials with verbal feedback and then be left alone in the EEG recording room to start the data collection.
-
-Stimuli were presented in black (16 Arial) font and centered in a white background in a 17in PC monitor. A fixation cross appeared for 1000ms at the beginning of the task and in between rounds. After that, each word was presented in the screen and disappeared after the participant made the decision. Once the participant pressed the decision button, the next word appeared. If no decision was made, the word was presented for a maximum duration of 1000ms. Once the participant completed the task, there was a debrief explanation of the experiment.
+The Lexical Monitoring Task (LMT) is an adaptation of the lexical decision task (Opitz & Degner, 2012). In the LMT, participants look at a monitor screen, see a word, and decide whether it is a real word or not (Yes/No decision). The task was divided into five rounds, each with 30 trials (10 emotion words, 10 non-emotion words, 10 pseudo-words).
 
 ## Statistical analysis
-We used `r cite_r("r-references.bib")` for all our analyses. Data from the LMT and the LHQ were analyzed
+Data from the Language History Questionnaire and the Lexical Monitoring Task were analyzed. Data were analyzed using R (2021). All data and scripts follow open-science practices and are available at the [GitHub repository of the project](https://emcorregidor.github.io/final_project/).
 
-Analyses (what I would do)
-a) Accuracy ~ Task Language x Word Type (+ 1 | item)
-b) Latency ~ Task Language x Word Type (+ 1 | item)
+For the accuracy model, a generalized linear mixed-effects model with a binomial linking function (as implemented in the lme4 package 1.1-37 in R 2024.12.0+467) was used. The accuracy model included *accuracy* (right vs. wrong) as the dependent variable, and *task language* (*L1* vs. *L2*) as a fixed factor or predictor. A "right" response was coded as "0" and a "wrong" response was coded as "1".
 
-DVs (measurement, options)
+For the latency model, a generalized linear mixed-effects model (as implemented in the lme4 package 1.1-37 in R 2024.12.0+467) was used. The latency model included *latency* (190-490 ms) as the dependent variable, and *task language* (*L1* vs. *L2*) as a fixed factor or predictor.
 
-Accuracy in L1 AND L2 (right/wrong)
-Latency (ms, 280-430)
-Predictors
-
-Language (l1, l2)
-Condition-Word type (emotion, non-emotion, and pseudo-words [this ones will not be considered for the analysis])
-
-Data from the categorization task were analyzed using a generalized linear mixed-effects model with a binomial linking function (as implemented in the Ime package 1.1-10 in R 3.2.2). The model included response (body/potty) as the dependent variable, and adaptor condition (prevoiced, ambiguous, aspirated), lexical set (/b/-adaptors, /p-adaptors/), and continuum step (ranging from -40 to +60 VOT in 10 ms increments) as fixed factors. A "body" response was coded as "" and a "potty" response was coded as "1." Causal priority was given to lexical set and the model included random intercepts for each subject. Significance of main effects and all possible interactions were assessed using hierarchical partitioning of the variance via nested model compari-sons. Orthogonal contrast coding directly compared the participants' responses in each adaptor condition as a function of lexical set. We report p-values with alpha set at 0.05 and include confidence intervals of parameter estimates in order to provide an assessment of effect
+Both models included random slopes for participants and item (Baayen et al., 2008). The models also included a *word type*  interaction. P-values with alpha set at 0.05 and confidence intervals of parameter estimates for both models are reported to provide an assessment of effect sizes. R- squared is reported for each model as an indication of goodness of fit (Nakagawa and Schielzeth, 2013).
 
 # Results
 
-# Discussion
+The accuracy model showed a good fit, with most of the variance explained by the fixed predictors rather than the random effects (marginal R2 = 0.1735; conditional R2 = 0.1787). For random effects, the accuracy model shows variability for participants (variance = 2.091e-02). This confirms that participants vary in their performance and allows the model to assign a different baseline for each one of them. In contrast, there is no variability for item (variance = 1.148e-09). This indicates almost no variance per item, so allowing each item to have its own slope might be unnecessary.
 
+In terms of fixed effects, the accuracy model indicates that, when switching to the L2, accuracy decreases (estimate = -1.8199, CI = –1.91, –1.73, p < 2e-16). Word type does not have a significant effect (estimate = -0.0147, CI = -0.1210, 0.0915, p = 0.786). However, the model reveals a significant interaction between L2 and word type (estimate = 0.3362, CI = 0.2107, 0.4618, p = 1.53e-07). More concretely, when using the L2, non emotional words are performed better. As a consequence, emotional words in the L2 are processed less accurately.
+
+```{r}
+#| out-width: "75%"
+#| max-width: "100%"
+#| dpi: 400
+knitr::include_graphics(here::here("scripts", "plots", "plot_accuracy.png"))
+```
+
+The latency model showed a good fit, with most of the variance explained by the fixed predictors rather than the random effects (marginal R2 = 0.7458; conditional R2 = 0.7520). For random effects, the latency model shows a great variability for participants (variance = 16.01). This confirms that participants vary in their performance and allows the model to assign a different baseline for each one of them. In contrast, there is no variability for item (variance = 0). No variance per item indicates that allowing each item to have its own slope does not provide any meaningful information about the model.
+
+In terms of fixed effects, the latency model indicates that, when switching to the L2, latency increases (estimate = 95.0539, CI = 94.2422, 95.8656). Word type has a latency effect in both languages. More specifically, non emotional words are processed faster both in the L1 (estimate = -0.1250, CI = -0.9366, 0.6867), and the L2 (estimate = -15.5651, CI = -16.7130, -14.4172). These results reveal an interaction between language and word type. More concretely, when using the L2, non emotional words are processed faster than emotional words. The same is true for the L1, but effects are much smaller (15.5651 > 0.1250).
+
+```{r}
+#| out-width: "75%"
+#| max-width: "100%"
+#| dpi: 400
+knitr::include_graphics(here::here("scripts", "plots", "plot_latency.png"))
+```
 
 \newpage
 
 # References
 
-::: {#refs custom-style="Bibliography"}
-:::
+Baayen, R. H., Davidson, D. J., & Bates, D. M. (2008). Mixed-effects modeling with crossed random effects for subjects and items. Journal of Memory and Language, 59(4), 390–412. https://doi.org/10.1016/j.jml.2007.12.005
+
+Kuperman, V., & Imbault, C. (2020, February 27). How are words felt in a 2nd language: Norms for 2,668 English words for valence and arousal by non-native speakers. OSF. https://osf.io/nr9wj
+
+Nakagawa, S., & Schielzeth, H. (2013). A general and simple method for obtaining R2 from generalized linear mixed-effects models. Methods in Ecology and Evolution, 4(2), 133-142. https://doi.org/10.1111/j.2041-210x.2012.00261.x
+
+Opitz, B., & Degner, J. (2012). Emotionality in a second language: it's a matter of time. Neuropsychologia, 50(8), 1961–1967. https://doi.org/10.1016/j.neuropsychologia.2012.04.021
+
+R Core Team (2021). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. https://www.R-project.org/.
+
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}

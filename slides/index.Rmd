@@ -33,10 +33,10 @@ data_tidy <- data_raw |>
     sep = "_") |>
   separate (
     col = item,
-    into = c("word_type", "number"),
-    sep = "_") |>
+    into = c("word_type", "word"),
+    sep = "_", remove = F) |>
   rename(accuracy = response) |>
-  select(id, language, word_type, accuracy, latency)
+  select(id, language, word_type, item, accuracy, latency)
 ```
 
 #*Emotionality in a second language: It's a matter of time* (Opitz & Degner, 2012)
@@ -126,7 +126,7 @@ A generalized linear model + binary regression
 *Accuracy* ~ *Task Language* + *Word Type*
 ```{r echo=TRUE}
 mod_accuracy <- glm(
-  accuracy ~ language + word_type, 
+  accuracy ~ language * word_type, 
   data = data_tidy, 
   family = "binomial"
 )
@@ -155,12 +155,12 @@ data_tidy |>
 ---
 #An adaptation for ds4ling
 ##Statistical Analysis: Latency Model
-A general linear model (spoiler: plots are more fun)
+A linear model (spoiler: plots are more fun)
 
 *Latency* ~ *Task Language* + *Word Type*
 ```{r echo=TRUE}
 mod_latency <- lm(
-  accuracy ~ language + word_type, 
+  latency ~ language * word_type, 
   data = data_tidy)
 ```
 ---

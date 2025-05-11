@@ -26,7 +26,7 @@ class: center, middle, inverse, title-slide
 ### Department of Spanish and Portuguese, Rutgers University
 ]
 .date[
-### 2025/05/05 (updated: 2025-05-05)
+### 2025/05/05 (updated: 2025-05-10)
 ]
 
 ---
@@ -125,9 +125,17 @@ A generalized linear model + binary regression
 
 ``` r
 mod_accuracy &lt;- glm(
-  accuracy ~ language + word_type, 
+  accuracy ~ language * word_type, 
   data = data_tidy, 
   family = "binomial"
+)
+```
+
+
+``` r
+mod_accuracy &lt;- glm(
+  accuracy ~ language * word_type, 
+  data = data_tidy
 )
 ```
 ---
@@ -137,25 +145,26 @@ mod_accuracy &lt;- glm(
 ```
 ## 
 ## Call:
-## glm(formula = accuracy ~ language + word_type, family = "binomial", 
-##     data = data_tidy)
+## glm(formula = accuracy ~ language * word_type, data = data_tidy)
 ## 
 ## Coefficients:
-##                       Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)            2.04898    0.02705  75.739  &lt; 2e-16 ***
-## languageL2            -1.60830    0.02623 -61.319  &lt; 2e-16 ***
-## word_typenonemotional  0.22489    0.02872   7.830 4.89e-15 ***
-## word_typepseudoword    0.22618    0.02873   7.874 3.45e-15 ***
+##                                   Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                       0.899867   0.004608 195.283  &lt; 2e-16 ***
+## languageL2                       -0.305467   0.006517 -46.874  &lt; 2e-16 ***
+## word_typenonemotional            -0.001333   0.006517  -0.205    0.838    
+## word_typepseudoword               0.001067   0.006517   0.164    0.870    
+## languageL2:word_typenonemotional  0.075600   0.009216   8.203 2.40e-16 ***
+## languageL2:word_typepseudoword    0.071200   0.009216   7.726 1.14e-14 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## (Dispersion parameter for binomial family taken to be 1)
+## (Dispersion parameter for gaussian family taken to be 0.1592534)
 ## 
-##     Null deviance: 48370  on 44999  degrees of freedom
-## Residual deviance: 43887  on 44996  degrees of freedom
-## AIC: 43895
+##     Null deviance: 7932.7  on 44999  degrees of freedom
+## Residual deviance: 7165.4  on 44994  degrees of freedom
+## AIC: 45036
 ## 
-## Number of Fisher Scoring iterations: 4
+## Number of Fisher Scoring iterations: 2
 ```
 ---
 
@@ -163,7 +172,7 @@ mod_accuracy &lt;- glm(
 ## `geom_smooth()` using formula = 'y ~ x'
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-6-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-7-1.png" width="75%" style="display: block; margin: auto;" /&gt;
 ---
 #An adaptation for ds4ling
 ##Statistical Analysis: Latency Model
@@ -173,7 +182,7 @@ A general linear model (spoiler: plots are more fun)
 
 ``` r
 mod_latency &lt;- lm(
-  accuracy ~ language + word_type, 
+  latency ~ language * word_type, 
   data = data_tidy)
 ```
 ---
@@ -183,27 +192,29 @@ mod_latency &lt;- lm(
 ```
 ## 
 ## Call:
-## lm(formula = accuracy ~ language + word_type, data = data_tidy)
+## lm(formula = latency ~ language * word_type, data = data_tidy)
 ## 
 ## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -0.91207  0.08793  0.08813  0.34447  0.38113 
+##     Min      1Q  Median      3Q     Max 
+## -109.98  -17.00    0.09   17.01  102.97 
 ## 
 ## Coefficients:
-##                        Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)            0.875400   0.003766 232.455  &lt; 2e-16 ***
-## languageL2            -0.256533   0.003766 -68.120  &lt; 2e-16 ***
-## word_typenonemotional  0.036467   0.004612   7.906 2.71e-15 ***
-## word_typepseudoword    0.036667   0.004612   7.950 1.91e-15 ***
+##                                  Estimate Std. Error  t value Pr(&gt;|t|)    
+## (Intercept)                      300.1106     0.2928 1024.993   &lt;2e-16 ***
+## languageL2                        95.0539     0.4141  229.559   &lt;2e-16 ***
+## word_typenonemotional             -0.1250     0.4141   -0.302    0.763    
+## word_typepseudoword               -0.1488     0.4141   -0.359    0.719    
+## languageL2:word_typenonemotional -15.5651     0.5856  -26.580   &lt;2e-16 ***
+## languageL2:word_typepseudoword   -14.9920     0.5856  -25.602   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 0.3994 on 44996 degrees of freedom
-## Multiple R-squared:  0.09502,	Adjusted R-squared:  0.09496 
-## F-statistic:  1575 on 3 and 44996 DF,  p-value: &lt; 2.2e-16
+## Residual standard error: 25.36 on 44994 degrees of freedom
+## Multiple R-squared:  0.7397,	Adjusted R-squared:  0.7397 
+## F-statistic: 2.558e+04 on 5 and 44994 DF,  p-value: &lt; 2.2e-16
 ```
 ---
-&lt;img src="index_files/figure-html/unnamed-chunk-9-1.png" width="85%" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-10-1.png" width="85%" style="display: block; margin: auto;" /&gt;
 ---
 #An adaptation for ds4ling
 ##Considerations &amp; Current Challenges

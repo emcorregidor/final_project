@@ -1,7 +1,0 @@
----
-output: md_document
----
-
-# Final project
-
-Project info here
