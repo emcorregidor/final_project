@@ -31,7 +31,7 @@ output            : papaja::apa6_word
 ```{r setup, include = FALSE}
 library("papaja")
 r_refs("r-references.bib")
-source("../scripts/libs.R")
+source(here::here("./scripts/libs.R"))
 ```
 
 ```{r analysis-preferences}
