@@ -83,6 +83,14 @@ plot_accuracy <- data_tidy |>
     title = "Accuracy per Word Type by language",
     x = "Word Type", y = "Accuracy")
 
+data_tidy |> 
+  group_by(id, language, word_type) |> 
+  summarize(response = mean(accuracy)) |> 
+  ggplot() + 
+  aes(x = language, y = response, color = word_type) + 
+  geom_point(position = position_dodge(0.5), alpha = 0.2) + 
+  stat_summary(fun.data = mean_sdl, geom = "pointrange", position = position_dodge(0.75)) 
+
 # save plot
 
 ggsave(
